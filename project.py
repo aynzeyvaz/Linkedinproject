@@ -2,9 +2,13 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 import time
 
-service=Service("C:\\Users\\Vivo\\Desktop\\chromedriver\\chromedriver-win64\\chromedriver.exe")
-driver=webdriver.Chrome(service=service)
-driver.get("https://www.google.com")
-time.sleep(10)
-driver.quit()
+class Linkdin:
+    def __init__(self,chromedriverpath):
+        self.service=Service(chromedriverpath)
+        self.driver=webdriver.Chrome(service=self.service)
+    def openpage(self):
+        self.driver.get("https://www.linkedin.com/jobs/")
+        time.sleep(5)
+    def closepage(self):
+        self.driver.quit()
 
