@@ -22,8 +22,14 @@ class Linkdin:
 
 
     def search(self):
-        wait=WebDriverWait(self.driver, 10)
-        jobs= wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@href='/jobs/']")))
+        while True:
+            state=self.driver.execute_script("return document.readyState")
+            if state=="complete":
+                break
+            time.sleep(0.5)
+        time.sleep(3)
+
+        jobs=self.driver.find_element(By.XPATH,"/html/body/div[6]/header/div/nav/ul/li[3]/a")
         jobs.click()
         time.sleep(3)
 
@@ -33,10 +39,9 @@ class Linkdin:
         password_input=self.driver.find_element(By.ID, "password")
         password_input.send_keys(password)
         password_input.send_keys(Keys.ENTER)
-        time.sleep(60)
+        time.sleep(50)
 
 jobfind=Linkdin("C:\\Users\\Vivo\\Desktop\\firedriver\\geckodriver.exe")
 jobfind.openpage()
 jobfind.login(username,password)
 jobfind.search()
-
