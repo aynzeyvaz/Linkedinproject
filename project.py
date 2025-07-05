@@ -5,12 +5,17 @@ from selenium.webdriver.common.keys import Keys
 username="taylorlenastyles@gmail.com"
 password="13851385a"
 
+jobtitle=input("What job title do u want to search for?")
+number=input("How many results should be shown?")
+location=input("Which location?")
+
 class linkedin:
     def __init__(self):
         self.driver=webdriver.Firefox()
         
     def login(self):
-        self.driver.get("https://www.linkedin.com/login?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin")
+        URL="linkedin.com/jobs/search?keywords="+"jobtitle"+"&position=1&pagenum=0"
+        self.driver.get(URL)
         username_input=self.driver.find_element(By.ID, "username")
         password_input=self.driver.find_element(By.ID, "password")
         username_input.send_keys(username)
