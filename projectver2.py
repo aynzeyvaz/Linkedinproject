@@ -1,0 +1,52 @@
+from selenium import webdriver 
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys 
+import time
+import pandas as pd
+
+jobtitle=input("What job title do u want to search for? ")
+location=input("Which location? ")
+number=int(input("How many results would u like to see? "))
+
+job=jobtitle.replace(" ", "-").lower()
+loc=location.replace(" ", "-").lower()
+
+driver=webdriver.Firefox()
+link=f"https://www.linkedin.com/jobs/{job}-{loc}-jobs"
+driver.get(link)
+time.sleep(3)
+height=driver.execute_script("return document.body.scrollHeight;")
+max=10
+n=0
+while True:
+      if max==n:
+           break
+      jobs=driver.find_elements(By.CLASS_NAME, "base-card")
+      if len(jobs)>=number:
+           break
+      driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+      time.sleep(3)
+      n+=1
+      
+
+
+count=0
+list=[]
+titles=[]
+companies=[]
+locations=[]
+links=[]
+for j in jobs:
+    title=j.find_element(By.CLASS_NAME, "base-search-card__title").text.strip()
+    company=j.find_element(By.CLASS_NAME, "base-search-card__subtitle").text.strip()
+    location=j.find_element(By.CLASS_NAME, "job-search-card__location").text.strip()
+    linktojob=j.find_element(By.TAG_NAME, "a").get_attribute("href").strip()
+    list.append((title, company, location, linktojob))
+  
+    for title,company,location,linktojob in list:
+        titles.append(title)
+        companies.append(company)
+        locations.append(location)
+        links.append(linktojob)
+table=pd.DataFrame({ "Title": titles, "Company":companies, "Location": locations, "Link": links})
+print(table)
