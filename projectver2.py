@@ -8,11 +8,12 @@ jobtitle=input("What job title do u want to search for? ")
 location=input("Which location? ")
 number=int(input("How many results would u like to see? "))
 
-job=jobtitle.replace(" ", "-").lower()
-loc=location.replace(" ", "-").lower()
+job=jobtitle.replace(" ", "%20").lower()
+loc=location.replace(" ", "%20").replace(",", "%2c").lower()
+
 
 driver=webdriver.Firefox()
-link=f"https://www.linkedin.com/jobs/{job}-{loc}-jobs"
+link=f"https://www.linkedin.com/jobs/search/?keywords={job}&location={loc}"
 driver.get(link)
 time.sleep(3)
 height=driver.execute_script("return document.body.scrollHeight;")
