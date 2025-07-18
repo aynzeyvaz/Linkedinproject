@@ -16,11 +16,11 @@ driver=webdriver.Firefox()
 link=f"https://www.linkedin.com/jobs/search/?keywords={job}&location={loc}"
 driver.get(link)
 time.sleep(3)
-height=driver.execute_script("return document.body.scrollHeight;")
+height=driver.execute_script("return document.body.scrollHeight;")      #JS code that returns the height of the page
 max=10
 n=0
-while True:
-      if max==n:
+while True:                                               #i think there might be a better way to scroll down, more efficeint one!
+      if n==max:
            break
       jobs=driver.find_elements(By.CLASS_NAME, "base-card")
       if len(jobs)>=number:
@@ -50,4 +50,5 @@ for j in jobs:
         locations.append(location)
         links.append(linktojob)
 table=pd.DataFrame({ "Title": titles, "Company":companies, "Location": locations, "Link": links})
-print(table)
+print(table.to_string())
+ 
