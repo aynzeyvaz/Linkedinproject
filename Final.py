@@ -25,7 +25,11 @@ if sub_button:
                     scraper= linkedin(jobtitle, location, number)
                     scraper.create_driver()
                     scraper.search_URL()
-                    scraper.job_scraper()
+                    scraper.scroller()
+                    scraper.jobscraper()
+                    scraper.tocsv()
+                    scraper.quit()
+
                     table=pd.read_csv("results.csv")
                     st.success(f"Found {len(table)} jobs!")
                     for index, row in table.iterrows():   #هر سطر در جدولو به صورت دو تایی ایندکس و اون سطر میده
@@ -35,8 +39,9 @@ if sub_button:
                                 else:
                                      st.write("Unabla to load image.")
                                 st.markdown(f"### 📌{row['Title']}")
-                                st.markdown(f"**Company:** {row['Company']}")
-                                st.markdown(f"**Location:** {row['Location']}")
+                                st.markdown(row['Company'])
+                                st.markdown(row['Location'])
+                                st.markdown(row['Date'])
                                 st.markdown(f"<a href='{row['Link']}'>🔗Tap to see the full information! </a>", unsafe_allow_html=True)
                         
      else:
