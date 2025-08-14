@@ -58,13 +58,17 @@ class linkedin():
         for j in self.li:            
             if len (self.titles)>=self.number:
                 break
-            title=j.find_element(By.CLASS_NAME, "base-search-card__title").text
-            company=j.find_element(By.CLASS_NAME, "base-search-card__subtitle").text
-            location=j.find_element(By.CLASS_NAME, "job-search-card__location").text
-            date=j.find_element(By.TAG_NAME, "time").text
-            linktojob=j.find_element(By.TAG_NAME, "a").get_attribute("href")
+            try:
+                title=j.find_element(By.CLASS_NAME, "base-search-card__title").text
+                company=j.find_element(By.CLASS_NAME, "base-search-card__subtitle").text
+                location=j.find_element(By.CLASS_NAME, "job-search-card__location").text
+                date=j.find_element(By.TAG_NAME, "time").text
+                linktojob=j.find_element(By.TAG_NAME, "a").get_attribute("href")
+                
+                picture=j.find_element(By.TAG_NAME, "img").get_attribute("src")
+            except:
+                continue
             
-            picture=j.find_element(By.TAG_NAME, "img").get_attribute("src")
             if linktojob and linktojob not in self.links:
                 if title and company and location and picture and date:
                     self.titles.append(title)
@@ -85,6 +89,8 @@ class linkedin():
 
     def quit(self):
         self.driver.quit()
+
+    
 
 
 
