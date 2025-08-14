@@ -38,8 +38,7 @@ pip install selenium pandas streamlit
 ```
 
 How to use:
-1-Open terminal in project folder
-2-Run streamlit app 
+Open terminal in project folder and run thhe streamlit app 
 ```bash
 streamlit run R.py
 ```
